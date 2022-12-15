@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert("utilizador",null,cv);
     }
     //verificar login
-    public  int veriicaLogin(String log, String senha){
+    public  int verificaLogin(String log, String senha){
      SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM utilizador WHERE login = ? and password = ?",new String[]{log,senha});
         c.moveToFirst();
@@ -49,5 +49,15 @@ public class DBHelper extends SQLiteOpenHelper {
             return  c.getInt(c.getColumnIndex("id"));
         }
         return -1;
+    }
+    //delete utilizadores
+    public  long eliminaUtilizadores(int id){
+        SQLiteDatabase db= getWritableDatabase();
+        return db.delete("utilizador","id=?",new String[]{String.valueOf(id)});
+    }
+    public  Cursor editarDados(int id){
+        SQLiteDatabase db=getReadableDatabase();
+        Cursor c= db.rawQuery("SELECT * FROM utilizador WHERE id=?",new String[]{String.valueOf(id)});
+     return c ;
     }
 }
